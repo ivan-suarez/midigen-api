@@ -1,7 +1,7 @@
 from mido import MidiFile, MidiTrack, Message
 
 from tensorflow.keras.models import load_model
-model = load_model('/kaggle/input/midigenmodel/my_model.keras')
+model = load_model('my_model.keras')
 
 starting_sequence = [(2.75, 3.25, 72, 50),
  (3.25, 4.0, 72, 50),
@@ -105,5 +105,5 @@ def create_midi_from_notes(notes, output_file='generated_sequence.mid'):
     
     midi.save(output_file)
 
-output_path = '/kaggle/working/my_generated_midi.mid'
+output_path = 'my_generated_midi.mid'
 create_midi_from_notes(generated_notes, output_file=output_path)
