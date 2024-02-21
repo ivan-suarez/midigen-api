@@ -1,7 +1,9 @@
 from mido import MidiFile, MidiTrack, Message
 
 from tensorflow.keras.models import load_model
-model = load_model('my_model.keras')
+import numpy as np
+
+model = load_model('bach.keras')
 
 starting_sequence = [(2.75, 3.25, 72, 50),
  (3.25, 4.0, 72, 50),
@@ -70,7 +72,7 @@ def generate_notes(model, seed_sequence, num_notes_to_generate):
 
 # Assuming `x_train` is your training data and `seed_index` is some index of your choice
 seed_index = 0
-seed_sequence = sequences[seed_index][:50] # Starting with an existing sequence as seed
+seed_sequence = starting_sequence # Starting with an existing sequence as seed
 num_notes_to_generate = 100  # Number of notes you want to generate
 
 # Generate notes
