@@ -115,6 +115,28 @@ def create_midi_from_notes(notes, output_file='generated_sequence.mid'):
         track.append(Message('note_off', note=pitch, velocity=0, time=delta_time_off))
     
     midi.save(output_file)
+  #  return output_file
 
 #output_path = 'my_generated_midi.mid'
 #create_midi_from_notes(generated_notes, output_file=output_path)
+
+
+
+def midi_to_json(generated_notes):
+    output_path = 'my_generated_midi.mid'
+    create_midi_from_notes(generated_notes)
+    midi = MidiFile(output_path)
+    events_list = []
+    for track in midi.tracks:
+        for msg in track:
+            # Filter out meta messages and non-note events if desired
+            if not msg.is_meta and msg.type in ['note_on', 'note_off']:
+                event = {
+                    'type': msg.type,
+                    'note': msg.note,
+                    'velocity': msg.velocity,
+                    'time': msg.time
+                }
+                events_list.append(event)
+    return events_list
+
