@@ -6,7 +6,7 @@ import numpy as np
 
 
 def generate():
-    model = load_model('bach.keras')
+    model = load_model('bach_one_note.keras')
 
     starting_sequence = [(2.75, 3.25, 72, 50),
     (3.25, 4.0, 72, 50),
@@ -59,8 +59,10 @@ def generate():
     (25.75, 25.75, 81, 56),
     (25.75, 26.0, 83, 49)]
 
+    starting_sequence_one = [(2.75, 3.25, 72, 50)]
+
     seed_index = 0
-    seed_sequence = starting_sequence # Starting with an existing sequence as seed
+    seed_sequence = starting_sequence_one # Starting with an existing sequence as seed
     num_notes_to_generate = 100  # Number of notes you want to generate
     generated_notes = generate_notes(model, seed_sequence, num_notes_to_generate)
     return generated_notes
@@ -69,7 +71,7 @@ def generate_notes(model, seed_sequence, num_notes_to_generate):
     generated_sequence = seed_sequence.copy()  # Copy the seed sequence
     for _ in range(num_notes_to_generate):
         # Reshape the sequence to match the model's input shape: (1, 50, 4)
-        input_sequence = np.array(generated_sequence[-50:]).reshape(1, 50, 4)
+        input_sequence = np.array(generated_sequence[-1:]).reshape(1, 1, 4)
         
         # Predict the next note
         predicted_note = model.predict(input_sequence)[0]  # model.predict returns a batch, so get the first
